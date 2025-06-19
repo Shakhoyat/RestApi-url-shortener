@@ -1,13 +1,16 @@
-import { Url } from "../Models/Url";
+import { Url } from "../Models/Url.js";
+import shortid from "shortid";
 export const shortUrl = async (req, res) => {
-  //   const { longUrl } = req.body;
-  //   // Here you would implement the logic to shorten the URL
-  //   const shortenedUrl = "shortened_url_here";
-  //   // Save the original and shortened URLs to the database
-  //   const urlEntry = new Url({
-  //     originalUrl: longUrl,
-  //     resultUrl: shortenedUrl,
-  //   });
-  //   await urlEntry.save();
-  //   res.render("index.ejs", { shortenedUrl });
+  const longUrl = req.body.longUrl;
+  const shortenedUrl = shortid.generate();
+
+  const shortUrl = `http://localhost:1000/${shortenedUrl}`;
+  //save to database
+  const newUrl = new Url({
+    originalUrl: longUrl,
+    resultUrl: shortUrl,
+  });
+  await newUrl.save();
+  console.log("Short url saved to database:", newUrl);
+  res.render("index.ejs", { shortenedUrl: shortUrl });
 };

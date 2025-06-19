@@ -2,11 +2,15 @@ import express from "express";
 import mongoose from "mongoose";
 import { shortUrl } from "./Controllers/url.js";
 const app = express();
-//rendering ejs file
 
+//url encoded
+app.use(express.urlencoded({ extended: true }));
+
+//rendering ejs file
 app.get("/", (req, res) => {
   res.render("index.ejs", { shortenedUrl: null });
 });
+
 //shorting url logic
 app.post("/shorten", shortUrl);
 
