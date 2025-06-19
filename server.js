@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { shortUrl } from "./Controllers/url.js";
+import { shortUrl, redirectToOriginalUrl } from "./Controllers/url.js";
 const app = express();
 
 //url encoded
@@ -14,6 +14,8 @@ app.get("/", (req, res) => {
 //shorting url logic
 app.post("/shorten", shortUrl);
 
+//redirect to the original url using the short url
+app.get("/:shortUrl", redirectToOriginalUrl);
 //connecting to mongodb
 mongoose
   .connect(

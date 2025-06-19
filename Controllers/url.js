@@ -14,3 +14,16 @@ export const shortUrl = async (req, res) => {
   console.log("Short url saved to database:", newUrl);
   res.render("index.ejs", { shortenedUrl: shortUrl });
 };
+
+export const redirectToOriginalUrl = async (req, res) => {
+  const shortUrl = req.params.shortUrl;
+  const urlData = await Url.findOne({
+    resultUrl: `http://localhost:1000/${shortUrl}`,
+  });
+
+  if (urlData) {
+    res.redirect(urlData.originalUrl);
+  } else {
+    res.status(404).send("URL not found");
+  }
+};
