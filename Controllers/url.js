@@ -1,5 +1,6 @@
 import { Url } from "../Models/Url.js";
 import shortid from "shortid";
+
 export const shortUrl = async (req, res) => {
   const longUrl = req.body.longUrl;
   const shortenedUrl = shortid.generate();
@@ -17,6 +18,7 @@ export const shortUrl = async (req, res) => {
 
 export const redirectToOriginalUrl = async (req, res) => {
   const shortUrl = req.params.shortUrl;
+  //find on db
   const urlData = await Url.findOne({
     resultUrl: `http://localhost:1000/${shortUrl}`,
   });
